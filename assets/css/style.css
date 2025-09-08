@@ -21,6 +21,20 @@
   background: rgba(240, 253, 244, 1);
 }
 
+#all-Plants-Cat {
+  justify-content: flex-start;
+}
+
+.tree-category {
+  justify-content: flex-start;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+.tree-category:hover {
+  background-color: #15803d;
+  color: white;
+}
 .active {
   background-color: #15803d;
   color: white;
