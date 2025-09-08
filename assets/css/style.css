@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+*,
+*::after,
+*::before {
+  font-family: "Inter", sans-serif;
+}
+.bg-green {
+  background-color: #15803d;
+}
+.bg-light-green {
+  background-color: #dcfce7;
+}
+.bg-dark-green {
+  background-color: #166534;
+}
+.bg-yellow {
+  background-color: #facc15;
+}
+.bg-high-light-green {
+  background: rgba(240, 253, 244, 1);
+}
+
+.active {
+  background-color: #15803d;
+  color: white;
+}
