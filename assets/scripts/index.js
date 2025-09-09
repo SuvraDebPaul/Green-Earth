@@ -4,6 +4,8 @@ const allPlants = document.getElementById("All-Plants");
 const categoryContentContainer = document.getElementById(
   "category-content-container"
 );
+const cartContainer = document.getElementById("category-cart");
+const totalPrice = document.getElementById("cart-total-price");
 const spinner = document.getElementById("spinner");
 // Managing Spinner
 const loadSpinner = (status) => {
@@ -79,7 +81,7 @@ const showAllPlants = (allPlants) => {
                     ${plant.category}
                   </p>
                   <p class="text-sm font-semibold text-gray-600">
-                    ৳<span class="ml-1">${plant.price}</span>
+                    ৳<span class="ml-1 price">${plant.price}</span>
                   </p>
                 </div>
                 <button id="${plant.id}" 
@@ -149,7 +151,7 @@ const showPlantsByCategory = (plants) => {
                     ${plant.category}
                   </p>
                   <p class="text-sm font-semibold text-gray-600">
-                    ৳<span class="ml-1">${plant.price}</span>
+                    ৳<span class="ml-1 price">${plant.price}</span>
                   </p>
                 </div>
                 <button id="${plant.id}" 
@@ -165,12 +167,22 @@ const showPlantsByCategory = (plants) => {
   });
 };
 
-// Showing Details in Modal
 // Adding Event Listener on Heading
 categoryContentContainer.addEventListener("click", (e) => {
+  // Showing Details in Modal
   if (e.target.localName === "h2") {
     const detailsID = e.target.id;
     loadIndividualDetails(detailsID);
+  }
+  //ADD TO CART OPTION CALLING
+  if (e.target.innerText === "Add to Cart") {
+    const id = e.target.id;
+    const name = e.target.parentNode.children[1].innerText;
+    const quantity = 1;
+    const price =
+      e.target.parentNode.children[3].children[1].childNodes[1].innerText;
+    let plantCart = { id, name, quantity, price };
+    insertingCart(plantCart);
   }
 });
 
@@ -181,7 +193,7 @@ const loadIndividualDetails = async (id) => {
   const data = await res.json();
   showIndividualDetails(data.plants);
 };
-
+//Showing Modal With Details in UI
 const showIndividualDetails = (plantDetails) => {
   const modalContainer = document.getElementById("my_modal_5");
   modalContainer.innerHTML = `
@@ -202,4 +214,48 @@ const showIndividualDetails = (plantDetails) => {
       </div>
   `;
   my_modal_5.showModal();
+};
+
+// Calculating and Showing Add to Cart
+let cartArray = [];
+
+const insertingCart = (plantCart) => {
+  const existingPlant = cartArray.find((plants) => plants.id === plantCart.id);
+
+  if (existingPlant) {
+    existingPlant.quantity += plantCart.quantity;
+  } else {
+    cartArray.push(plantCart);
+  }
+  showCartItems(cartArray);
+};
+
+const showCartItems = (allCarts) => {
+  cartContainer.innerHTML = "";
+  allCarts.forEach((carts) => {
+    cartContainer.insertAdjacentHTML(
+      "beforeend",
+      `
+          <div id="${carts.id}"
+                class="p-2 flex items-center justify-between bg-green-100 my-2"
+              >
+                <div class="text-sm">
+                  <h2 class="font-semibold">${carts.name}</h2>
+                  <p class="text-sm text-gray-400">
+                    ৳ <span>${carts.price}</span>
+                    <span>X ${carts.quantity}</span>
+                  </p>
+                </div>
+                <div class="">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline border-none hover:bg-green-200"
+                  >
+                    ❌
+                  </button>
+                </div>
+              </div>
+    `
+    );
+  });
 };
