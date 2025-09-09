@@ -21,10 +21,16 @@
   background: rgba(240, 253, 244, 1);
 }
 
-#all-Plants-Cat {
+#All-Plants {
   justify-content: flex-start;
+  background-color: transparent;
+  outline: none;
+  border: none;
 }
-
+#All-Plants:hover {
+  background-color: #15803d;
+  color: white;
+}
 .tree-category {
   justify-content: flex-start;
   background-color: transparent;
@@ -36,6 +42,6 @@
   color: white;
 }
 .active {
-  background-color: #15803d;
+  background-color: #15803d !important;
   color: white;
 }
