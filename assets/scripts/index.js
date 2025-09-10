@@ -11,8 +11,10 @@ const spinner = document.getElementById("spinner");
 const loadSpinner = (status) => {
   if (status) {
     spinner.classList.remove("hidden");
+    categoryContentContainer.classList.add("hidden");
   } else {
     spinner.classList.add("hidden");
+    categoryContentContainer.classList.remove("hidden");
   }
 };
 
@@ -50,6 +52,7 @@ allPlants.addEventListener("click", (e) => {
 });
 //Loading All Plants From Direct URL Fetch
 const loadAllPlants = () => {
+  loadSpinner(true);
   fetch("https://openapi.programming-hero.com/api/plants")
     .then((res) => res.json())
     .then((data) => showAllPlants(data.plants))
@@ -95,6 +98,7 @@ const showAllPlants = (allPlants) => {
         `
     );
   });
+  loadSpinner(false);
 };
 
 loadAllPlants();
@@ -118,6 +122,7 @@ const removeActiveFromLi = () => {
 };
 // Loading Plants With Their ID
 const loadPlantsByCategory = (categoryId) => {
+  loadSpinner(true);
   const categoryUrl = `https://openapi.programming-hero.com/api/category/${categoryId}`;
   fetch(categoryUrl)
     .then((res) => res.json())
@@ -165,6 +170,7 @@ const showPlantsByCategory = (plants) => {
         `
     );
   });
+  loadSpinner(false);
 };
 
 // Adding Event Listener on Heading
