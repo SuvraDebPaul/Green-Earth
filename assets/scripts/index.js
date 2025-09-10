@@ -5,7 +5,7 @@ const categoryContentContainer = document.getElementById(
   "category-content-container"
 );
 const cartContainer = document.getElementById("category-cart");
-const totalPrice = document.getElementById("cart-total-price");
+const cartTotalPrice = document.getElementById("cart-total-price");
 const spinner = document.getElementById("spinner");
 // Managing Spinner
 const loadSpinner = (status) => {
@@ -228,6 +228,7 @@ const insertingCart = (plantCart) => {
     cartArray.push(plantCart);
   }
   showCartItems(cartArray);
+  calculateTotal(cartArray);
 };
 
 const showCartItems = (allCarts) => {
@@ -258,4 +259,31 @@ const showCartItems = (allCarts) => {
     `
     );
   });
+};
+const calculateTotal = (cart) => {
+  let totalPrice = cart.reduce(
+    (acc, item) => acc + parseInt(item.price) * item.quantity,
+    0
+  );
+  document.getElementById("cart-total-price").innerText = totalPrice;
+};
+
+cartContainer.addEventListener("click", (e) => {
+  if (e.target.localName === "button") {
+    let cartItemId = e.target.parentNode.parentNode.id;
+    let filteredArray = cartArray.filter(
+      (itemCart) => itemCart.id !== cartItemId
+    );
+    cartArray = filteredArray;
+    showCartItems(cartArray);
+    adjustTotal(cartArray);
+  }
+});
+
+const adjustTotal = (cart) => {
+  let totalPrice = cart.reduce(
+    (acc, item) => acc + parseInt(item.price) * item.quantity,
+    0
+  );
+  document.getElementById("cart-total-price").innerText = totalPrice;
 };
